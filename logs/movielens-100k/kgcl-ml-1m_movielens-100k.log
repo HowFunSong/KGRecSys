@@ -1,0 +1,21 @@
+PID: 21320
+DESC: 
+
+########## Model HPs ##########
+tau: 0.1
+cl_weight: 0.1
+mu: 0.5
+########## Model Parameters ##########
+learning rate: 0.0010
+context_hops: 2
+node_dropout: 1
+node_dropout_rate: 0.5
+mess_dropout: 1
+mess_dropout_rate: 0.1
+all_embed: torch.Size([42296, 64])
+interact_mat: torch.Size([2625, 2625])
+edge_index: torch.Size([2, 332742])
+edge_type: torch.Size([332742])
+start training ...
+neg_sampling_cpp time: 0.38s
+train_cf_triples shape: (65641, 3)

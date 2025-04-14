@@ -32,7 +32,7 @@ def _sparse_dropout(x, rate=0.5):
     out = torch.sparse.FloatTensor(i, v, x.shape).to(x.device)
     return out * (1. / (1 - rate))
 
-class RGAT(nn.Module): #
+class RGAT(nn.Module):
     def __init__(self, channel, n_hops,
                  mess_dropout_rate=0.4):
         super(RGAT, self).__init__()

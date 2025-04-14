@@ -114,7 +114,7 @@ if __name__ == '__main__':
             # shuffle training data
             index = np.arange(len(train_cf))
             np.random.shuffle(index)
-            train_cf_with_neg = train_cf_with_neg[index]  ##?
+            train_cf_with_neg = train_cf_with_neg[index]
 
             """training cf"""
             # 對正負樣本訓練
