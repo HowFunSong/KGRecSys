@@ -46,10 +46,40 @@ class CompositePrior(nn.Module):
         return torch.logsumexp(density_per_gaussian, dim=-1)
 
     
+# class Encoder(nn.Module):
+#     def __init__(self, hidden_dim, latent_dim, input_dim, eps=1e-1):
+#         super(Encoder, self).__init__()
+#
+#         self.fc1 = nn.Linear(input_dim, hidden_dim)
+#         self.ln1 = nn.LayerNorm(hidden_dim, eps=eps)
+#         self.fc2 = nn.Linear(hidden_dim, hidden_dim)
+#         self.ln2 = nn.LayerNorm(hidden_dim, eps=eps)
+#         self.fc3 = nn.Linear(hidden_dim, hidden_dim)
+#         self.ln3 = nn.LayerNorm(hidden_dim, eps=eps)
+#         self.fc4 = nn.Linear(hidden_dim, hidden_dim)
+#         self.ln4 = nn.LayerNorm(hidden_dim, eps=eps)
+#         self.fc5 = nn.Linear(hidden_dim, hidden_dim)
+#         self.ln5 = nn.LayerNorm(hidden_dim, eps=eps)
+#         self.fc_mu = nn.Linear(hidden_dim, latent_dim)
+#         self.fc_logvar = nn.Linear(hidden_dim, latent_dim)
+#
+#     def forward(self, x, dropout_rate):
+#         norm = x.pow(2).sum(dim=-1).sqrt()
+#         x = x / norm[:, None]
+#
+#         x = F.dropout(x, p=dropout_rate, training=self.training)
+#
+#         h1 = self.ln1(swish(self.fc1(x)))
+#         h2 = self.ln2(swish(self.fc2(h1) + h1))
+#         h3 = self.ln3(swish(self.fc3(h2) + h1 + h2))
+#         h4 = self.ln4(swish(self.fc4(h3) + h1 + h2 + h3))
+#         h5 = self.ln5(swish(self.fc5(h4) + h1 + h2 + h3 + h4))
+#         return self.fc_mu(h5), self.fc_logvar(h5)
+#
+
 class Encoder(nn.Module):
     def __init__(self, hidden_dim, latent_dim, input_dim, eps=1e-1):
         super(Encoder, self).__init__()
-        
         self.fc1 = nn.Linear(input_dim, hidden_dim)
         self.ln1 = nn.LayerNorm(hidden_dim, eps=eps)
         self.fc2 = nn.Linear(hidden_dim, hidden_dim)
@@ -62,55 +92,88 @@ class Encoder(nn.Module):
         self.ln5 = nn.LayerNorm(hidden_dim, eps=eps)
         self.fc_mu = nn.Linear(hidden_dim, latent_dim)
         self.fc_logvar = nn.Linear(hidden_dim, latent_dim)
-        
+
     def forward(self, x, dropout_rate):
-        norm = x.pow(2).sum(dim=-1).sqrt()
+        # 加入 epsilon 以避免 norm 為 0
+        norm = x.pow(2).sum(dim=-1).sqrt().clamp(min=1e-8)
         x = x / norm[:, None]
-    
         x = F.dropout(x, p=dropout_rate, training=self.training)
-        
+
         h1 = self.ln1(swish(self.fc1(x)))
         h2 = self.ln2(swish(self.fc2(h1) + h1))
         h3 = self.ln3(swish(self.fc3(h2) + h1 + h2))
         h4 = self.ln4(swish(self.fc4(h3) + h1 + h2 + h3))
         h5 = self.ln5(swish(self.fc5(h4) + h1 + h2 + h3 + h4))
         return self.fc_mu(h5), self.fc_logvar(h5)
-    
 
+#
+# class VAE(nn.Module):
+#     def __init__(self, hidden_dim, latent_dim, input_dim):
+#         super(VAE, self).__init__()
+#
+#         self.encoder = Encoder(hidden_dim, latent_dim, input_dim)
+#         self.prior = CompositePrior(hidden_dim, latent_dim, input_dim)
+#         self.decoder = nn.Linear(latent_dim, input_dim)
+#
+#     def reparameterize(self, mu, logvar):
+#         if self.training:
+#             std = torch.exp(0.5*logvar)
+#             eps = torch.randn_like(std)
+#             return eps.mul(std).add_(mu)
+#         else:
+#             return mu
+#
+#     def forward(self, user_ratings, beta=None, gamma=1, dropout_rate=0.5, calculate_loss=True):
+#         mu, logvar = self.encoder(user_ratings, dropout_rate=dropout_rate)
+#         z = self.reparameterize(mu, logvar)
+#         x_pred = self.decoder(z)
+#
+#         if calculate_loss:
+#             if gamma:
+#                 norm = user_ratings.sum(dim=-1)
+#                 kl_weight = gamma * norm
+#             elif beta:
+#                 kl_weight = beta
+#
+#             mll = (F.log_softmax(x_pred, dim=-1) * user_ratings).sum(dim=-1).mean()
+#             kld = (log_norm_pdf(z, mu, logvar) - self.prior(user_ratings, z)).sum(dim=-1).mul(kl_weight).mean()
+#             negative_elbo = -(mll - kld)
+#
+#             return (mll, kld), negative_elbo
+#
+#         else:
+#             return x_pred
+#
+#     def update_prior(self):
+#         self.prior.encoder_old.load_state_dict(deepcopy(self.encoder.state_dict()))
 class VAE(nn.Module):
     def __init__(self, hidden_dim, latent_dim, input_dim):
         super(VAE, self).__init__()
-
         self.encoder = Encoder(hidden_dim, latent_dim, input_dim)
-        self.prior = CompositePrior(hidden_dim, latent_dim, input_dim)
         self.decoder = nn.Linear(latent_dim, input_dim)
-        
+
     def reparameterize(self, mu, logvar):
         if self.training:
-            std = torch.exp(0.5*logvar)
+            std = torch.exp(0.5 * logvar)
             eps = torch.randn_like(std)
-            return eps.mul(std).add_(mu)
+            return eps * std + mu
         else:
             return mu
 
     def forward(self, user_ratings, beta=None, gamma=1, dropout_rate=0.5, calculate_loss=True):
-        mu, logvar = self.encoder(user_ratings, dropout_rate=dropout_rate)    
+        mu, logvar = self.encoder(user_ratings, dropout_rate=dropout_rate)
         z = self.reparameterize(mu, logvar)
         x_pred = self.decoder(z)
-        
-        if calculate_loss:
-            if gamma:
-                norm = user_ratings.sum(dim=-1)
-                kl_weight = gamma * norm
-            elif beta:
-                kl_weight = beta
 
+        if calculate_loss:
+            # 使用 log_softmax 作為重建 likelihood
             mll = (F.log_softmax(x_pred, dim=-1) * user_ratings).sum(dim=-1).mean()
-            kld = (log_norm_pdf(z, mu, logvar) - self.prior(user_ratings, z)).sum(dim=-1).mul(kl_weight).mean()
+            # 使用閉合形式計算 KL divergence
+            kld = -0.5 * torch.sum(1 + logvar - mu.pow(2) - logvar.exp(), dim=1)
+            # 按 gamma scaling（也可以考慮其他 scaling 方法）
+            kld = (gamma * user_ratings.sum(dim=-1) * kld).mean()
             negative_elbo = -(mll - kld)
-            
             return (mll, kld), negative_elbo
-            
         else:
             return x_pred
 
