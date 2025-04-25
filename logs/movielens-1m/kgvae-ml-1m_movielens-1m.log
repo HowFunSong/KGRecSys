@@ -1,0 +1,212 @@
+PID: 26420
+Experiment Description: 
+########## Model HPs ##########
+tau: 0.2
+cl_weight: 0.1
+mu: 0.7
+########## Model Parameters ##########
+learning rate: 0.0010
+context_hops: 2
+node_dropout: 1
+node_dropout_rate: 0.5
+mess_dropout: 1
+mess_dropout_rate: 0.1
+all_embed: torch.Size([85438, 64])
+interact_mat: torch.Size([9746, 9746])
+edge_index: torch.Size([2, 764610])
+edge_type: torch.Size([764610])
+Pretraining RecVAE for 50 epochs...
+RecVAE Epoch 0: Loss = 2505.9761
+RecVAE Epoch 1: Loss = 1977.3782
+RecVAE Epoch 2: Loss = 1755.1804
+RecVAE Epoch 3: Loss = 1663.4377
+RecVAE Epoch 4: Loss = 1550.0173
+RecVAE Epoch 5: Loss = 1417.3759
+RecVAE Epoch 6: Loss = 1317.2175
+RecVAE Epoch 7: Loss = 1259.5137
+RecVAE Epoch 8: Loss = 1208.3059
+RecVAE Epoch 9: Loss = 1157.7139
+RecVAE Epoch 10: Loss = 1112.9855
+RecVAE Epoch 11: Loss = 1074.7831
+RecVAE Epoch 12: Loss = 1043.3645
+RecVAE Epoch 13: Loss = 1018.6537
+RecVAE Epoch 14: Loss = 1002.1918
+RecVAE Epoch 15: Loss = 991.1965
+RecVAE Epoch 16: Loss = 984.8411
+RecVAE Epoch 17: Loss = 980.0052
+RecVAE Epoch 18: Loss = 977.1498
+RecVAE Epoch 19: Loss = 974.5406
+RecVAE Epoch 20: Loss = 971.3447
+RecVAE Epoch 21: Loss = 969.0660
+RecVAE Epoch 22: Loss = 966.7464
+RecVAE Epoch 23: Loss = 963.8383
+RecVAE Epoch 24: Loss = 960.7854
+RecVAE Epoch 25: Loss = 957.1330
+RecVAE Epoch 26: Loss = 953.4940
+RecVAE Epoch 27: Loss = 950.3776
+RecVAE Epoch 28: Loss = 947.4377
+RecVAE Epoch 29: Loss = 944.4402
+RecVAE Epoch 30: Loss = 941.8709
+RecVAE Epoch 31: Loss = 939.3119
+RecVAE Epoch 32: Loss = 936.6918
+RecVAE Epoch 33: Loss = 934.6010
+RecVAE Epoch 34: Loss = 932.4683
+RecVAE Epoch 35: Loss = 930.7706
+RecVAE Epoch 36: Loss = 929.4272
+RecVAE Epoch 37: Loss = 928.0977
+RecVAE Epoch 38: Loss = 927.1145
+RecVAE Epoch 39: Loss = 926.3566
+RecVAE Epoch 40: Loss = 925.5228
+RecVAE Epoch 41: Loss = 925.0274
+RecVAE Epoch 42: Loss = 924.3384
+RecVAE Epoch 43: Loss = 923.5342
+RecVAE Epoch 44: Loss = 922.7476
+RecVAE Epoch 45: Loss = 922.0935
+RecVAE Epoch 46: Loss = 921.4638
+RecVAE Epoch 47: Loss = 921.0124
+RecVAE Epoch 48: Loss = 920.3599
+RecVAE Epoch 49: Loss = 919.6791
+RecVAE pretraining complete. Updated KGCL user embeddings.
+Starting KGCL training...
+Negative sampling time: 1.71s
+train_cf_triples shape: (666764, 3)
+Epoch 0000 | CF Time: 229.6s | KG Time: 10.5s | Mean KG Loss: 0.6723
+
++-------+---------+---------+--------------+------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |    NDCG    |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+------------+--------------+--------------+
+|   0   |  229.6  |   10.5  | [0.15913365] | [0.244482] | [0.17973174] | [0.86669978] |
++-------+---------+---------+--------------+------------+--------------+--------------+
+### Found better model at epoch 0
+Negative sampling time: 1.80s
+train_cf_triples shape: (666764, 3)
+Epoch 0001 | CF Time: 228.5s | KG Time: 10.5s | Mean KG Loss: 0.6521
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   1   |  228.5  |   10.5  | [0.21421452] | [0.31485443] | [0.23166915] | [0.92283491] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+### Found better model at epoch 1
+Negative sampling time: 1.76s
+train_cf_triples shape: (666764, 3)
+Epoch 0002 | CF Time: 228.1s | KG Time: 10.4s | Mean KG Loss: 0.6352
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   2   |  228.1  |   10.4  | [0.23721102] | [0.34113708] | [0.25110946] | [0.93823481] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+### Found better model at epoch 2
+Negative sampling time: 1.73s
+train_cf_triples shape: (666764, 3)
+Epoch 0003 | CF Time: 227.7s | KG Time: 10.4s | Mean KG Loss: 0.6164
+
++-------+---------+---------+-------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall   |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+-------------+--------------+--------------+--------------+
+|   3   |  227.7  |   10.4  | [0.2478794] | [0.34947754] | [0.25809737] | [0.94585196] |
++-------+---------+---------+-------------+--------------+--------------+--------------+
+### Found better model at epoch 3
+Negative sampling time: 1.76s
+train_cf_triples shape: (666764, 3)
+Epoch 0004 | CF Time: 227.3s | KG Time: 10.3s | Mean KG Loss: 0.5987
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   4   |  227.3  |   10.3  | [0.25236679] | [0.35247065] | [0.26003477] | [0.94932936] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+### Found better model at epoch 4
+Negative sampling time: 1.75s
+train_cf_triples shape: (666764, 3)
+Epoch 0005 | CF Time: 227.1s | KG Time: 10.5s | Mean KG Loss: 0.5814
+
++-------+---------+---------+--------------+-------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG    |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+-------------+--------------+--------------+
+|   5   |  227.1  |   10.5  | [0.25145066] | [0.3503109] | [0.25859414] | [0.95081967] |
++-------+---------+---------+--------------+-------------+--------------+--------------+
+Negative sampling time: 1.75s
+train_cf_triples shape: (666764, 3)
+Epoch 0006 | CF Time: 227.2s | KG Time: 10.3s | Mean KG Loss: 0.5626
+
++-------+---------+---------+--------------+-------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG    |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+-------------+--------------+--------------+
+|   6   |  227.2  |   10.3  | [0.24770959] | [0.3425997] | [0.25249213] | [0.94833582] |
++-------+---------+---------+--------------+-------------+--------------+--------------+
+Negative sampling time: 1.72s
+train_cf_triples shape: (666764, 3)
+Epoch 0007 | CF Time: 227.6s | KG Time: 10.4s | Mean KG Loss: 0.5401
+
++-------+---------+---------+-------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall   |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+-------------+--------------+--------------+--------------+
+|   7   |  227.6  |   10.4  | [0.2442742] | [0.33509614] | [0.24731744] | [0.94701109] |
++-------+---------+---------+-------------+--------------+--------------+--------------+
+Negative sampling time: 1.77s
+train_cf_triples shape: (666764, 3)
+Epoch 0008 | CF Time: 226.8s | KG Time: 10.5s | Mean KG Loss: 0.5192
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   8   |  226.8  |   10.5  | [0.24540341] | [0.33799624] | [0.24972678] | [0.94800464] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+Negative sampling time: 1.73s
+train_cf_triples shape: (666764, 3)
+Epoch 0009 | CF Time: 226.9s | KG Time: 10.3s | Mean KG Loss: 0.4974
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   9   |  226.9  |   10.3  | [0.24595171] | [0.33800967] | [0.25043881] | [0.94750787] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+Negative sampling time: 1.73s
+train_cf_triples shape: (666764, 3)
+Epoch 0010 | CF Time: 227.3s | KG Time: 10.4s | Mean KG Loss: 0.4713
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   10  |  227.3  |   10.4  | [0.24707488] | [0.34047673] | [0.25211956] | [0.94916377] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+Negative sampling time: 1.74s
+train_cf_triples shape: (666764, 3)
+Epoch 0011 | CF Time: 227.1s | KG Time: 10.4s | Mean KG Loss: 0.4463
+
++-------+---------+---------+--------------+--------------+-------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision  |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+-------------+--------------+
+|   11  |  227.1  |   10.4  | [0.24523828] | [0.33798189] | [0.2504057] | [0.94767346] |
++-------+---------+---------+--------------+--------------+-------------+--------------+
+Negative sampling time: 1.71s
+train_cf_triples shape: (666764, 3)
+Epoch 0012 | CF Time: 227.1s | KG Time: 10.3s | Mean KG Loss: 0.4250
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   12  |  227.1  |   10.3  | [0.24213168] | [0.33394529] | [0.24760722] | [0.94667991] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+Negative sampling time: 1.74s
+train_cf_triples shape: (666764, 3)
+Epoch 0013 | CF Time: 227.5s | KG Time: 10.5s | Mean KG Loss: 0.4078
+
++-------+---------+---------+--------------+--------------+-------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision  |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+-------------+--------------+
+|   13  |  227.5  |   10.5  | [0.24311023] | [0.33581479] | [0.2490313] | [0.94485842] |
++-------+---------+---------+--------------+--------------+-------------+--------------+
+Negative sampling time: 1.75s
+train_cf_triples shape: (666764, 3)
+Epoch 0014 | CF Time: 227.5s | KG Time: 10.3s | Mean KG Loss: 0.3914
+
++-------+---------+---------+--------------+--------------+--------------+--------------+
+| Epoch | CF Time | KG Time |    Recall    |     NDCG     |  Precision   |  Hit Ratio   |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+|   14  |  227.5  |   10.3  | [0.24219085] | [0.33381745] | [0.24812883] | [0.94750787] |
++-------+---------+---------+--------------+--------------+--------------+--------------+
+Early stopping triggered at epoch 14
+Training complete. Early stopping at epoch 14, recall@20: 0.2524
